@@ -31,6 +31,47 @@ flutter doctor
 
 - 사용 시점: StatelessWidget은 주로 화면에 표시할 내용이 고정되어 있고, 사용자 상호작용에 의해 변경되지 않는 경우에 사용합니다.
 
+### StatefulWidget
+> 동적인 상태를 가지는 위젯을 만들 때 사용
+
+1. 핵심은 *setState* 이다.
+
+```dart
+import 'dart:math';
+import 'package:flutter/material.dart';
+int mynum = 1;
+class MyNumber extends StatefulWidget {
+    const MyNumber({ super.key });
+    @override
+    State<MyNumber> createState() {
+        return _MyNumberState();
+    }
+}
+class _MyNumberState extends State<MyNumber> {
+    void setMyNum() {
+        setState(() {
+            mynum = Random().nextInt(1000) + 1;
+        });
+    }
+    @override
+    Widget build(context) {
+        return Column(
+            children: [
+                TextButton(
+                    onPressed: setMyNum, 
+                    style: TextButton.styleFrom(
+                        foregroundColor: Colors.red,
+                        textStyle: const TextStyle(
+                            fontSize: 28,
+                        )
+                    ),
+                    child: Text('$mynum')
+                )
+            ],
+        );
+    }
+}
+```
 ### BoxDecoration
 > Container 위젯이나 다른 위젯의 배경을 꾸미기 위해 사용하는 클래스, 다양한 시각적 효과를 적용 할 수 있다.
 
@@ -135,4 +176,4 @@ import 'package:프로젝트명/gradient-container.dart';
 - 상수 값: 컴파일 타임에 결정되며, 런타임 동안 변경되지 않음
 - 불면 객체: 객체의 속성이나 값이 변경되지 않으며, 동일한 값의 객체는 메모리에서 동일한 인스턴스를 재사용됨
   
-**const**는 컴파일 타임 상수를 정의하며, 객체를 불변으로 만듦.  
+**const**는 컴파일 타임 상수를 정의하며, 객체를 불변으로 만듦.
