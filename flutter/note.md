@@ -1,7 +1,7 @@
 # Flutter
 
 ## 설치하기
-1. 아래 명령줄을 사용하여 *설정상태*를 확인할 수 있다.   
+1. 아래 명령줄을 사용하여 환경설정 상황을 확인할 수 있다.   
 ```sh
 flutter doctor
 ```
@@ -13,11 +13,11 @@ flutter doctor
 ## 실행하기
 
 ### VSCode
-1. *Extension* 에서 Dart Code 의 *Flutter* 확장 플러그인을 설치하도록 하자.  
+1. **Extension** 에서 Dart Code 의 **Flutter** 확장 플러그인을 설치하도록 하자.  
   
-2. vscode 의 palette (ctrl/cmd + shift + p) 에서 *Select Device* 를 선택하여 장치를 세팅해 주자.
+2. vscode 의 palette (ctrl/cmd + shift + p) 에서 **Select Device** 를 선택하여 장치를 세팅해 주자.
 
-3. lib/main.dart 파일에서 *Run Without Debugging* 을 통해 실행하면 된다.   
+3. lib/main.dart 파일에서 **Run Without Debugging** 을 통해 실행하면 된다.   
 
 ## 내장 클래스
 ### StatelessWidget
@@ -34,7 +34,7 @@ flutter doctor
 ### StatefulWidget
 > 동적인 상태를 가지는 위젯을 만들 때 사용
 
-1. 핵심은 *setState* 이다.
+1. 핵심은 **setState** 이다.
 
 ```dart
 import 'dart:math';
@@ -177,3 +177,12 @@ import 'package:프로젝트명/gradient-container.dart';
 - 불면 객체: 객체의 속성이나 값이 변경되지 않으며, 동일한 값의 객체는 메모리에서 동일한 인스턴스를 재사용됨
   
 **const**는 컴파일 타임 상수를 정의하며, 객체를 불변으로 만듦.
+
+## assets 설정
+1. **pubspec.yaml** 에서 경로를 기입해 준다.
+```yaml
+flutter:
+  # To add assets to your application, add an assets section, like this:
+  assets:
+     - assets/
+```
