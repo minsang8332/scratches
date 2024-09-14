@@ -165,6 +165,51 @@ const merge = (arr = []) => {
     }
     return joiner(larr, rarr)
 }
+/*
+const heap = (arr = []) => {
+    // 초기힙 만들기
+    for (let i = 1; i < arr.length; i++) { // i를 0에서 시작하지 않고 1부터 시작하도록 변경
+        let ci = i
+        while (ci > 0) {
+            let pi = Math.floor((ci - 1) / 2)
+            if (arr[ci] <= arr[pi]) break
+            const tmp = arr[ci] // tmp 변수 추가
+            arr[ci] = arr[pi]
+            arr[pi] = tmp
+            ci = pi
+        }
+    }
+    // 최댓값을 삭제하고 힙으로 재구성
+    for (let i = arr.length - 1; i > 0; i--) {
+        // 최댓값 과 마지막 노드의 원소를 교환한다.
+        const tmp = arr[0]
+        arr[0] = arr[i]
+        arr[i] = tmp
+        let cur = 0
+        let l = 1
+        let r = 2
+        // 힙 재구성
+        do {
+            if (r < i && arr[l] < arr[r]) {
+                l = r
+            }
+            if (arr[l] > arr[cur]) {
+                // arr[cur] 과 arr[l] 원소를 교환한다.
+                const tmp = arr[l]
+                arr[l] = arr[cur]
+                arr[cur] = tmp
+                cur = l
+                l = cur * 2 + 1
+                r = cur * 2 + 2
+            } else {
+                l = i
+            }
+        } while (l < i)
+    }
+    return arr
+}
+*/
+
 console.log(
     '선택정렬', 
     selection([30, 20, 40, 35, 5, 10, 45, 50, 25, 15])
