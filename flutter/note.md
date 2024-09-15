@@ -179,10 +179,26 @@ import 'package:프로젝트명/gradient-container.dart';
 **const**는 컴파일 타임 상수를 정의하며, 객체를 불변으로 만듦.
 
 ## assets 설정
-1. **pubspec.yaml** 에서 경로를 기입해 준다.
+
+1. **pubspec.yaml** 경로 기입
+2. **flutter pub get** 명령어 실행
+
 ```yaml
 flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
      - assets/
 ```
+
+## State
+
+### initState()
+> State 객체가 생성된 다음 실행
+
+- 위젯의 상태를 초기화하거나 데이터 요청, 애니메이션 등 초기 설정을 수행할 수 있다.
+
+### build()
+> 위젯이 만들어지고 setState() 가 호출 된 다음에 실행 
+
+### dispose()
+> 위젯이 제거될 때 실행
