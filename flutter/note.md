@@ -20,6 +20,12 @@ flutter doctor
 3. lib/main.dart 파일에서 **Run Without Debugging** 을 통해 실행하면 된다.   
 
 ## 내장 클래스
+### State
+- initState() : State 객체가 생성된 다음 실행. <br>
+    위젯의 상태를 초기화하거나 데이터 요청, 애니메이션 등 초기 설정을 수행할 수 있다.
+
+- build() : 위젯이 만들어지고 setState() 가 호출 된 다음에 실행 
+- dispose() : 위젯이 제거될 때 실행
 ### StatelessWidget
 > 위젯을 만들 때 사용하는 기본 클래스중 하나. 이 위젯은 상태를 가지지 않으며, 생성 시에 주어진 데이터에 기반하여 화면을 그리는 역할.  
 > 즉, 상태가 변경되지 않는 불변(immutable) 위젯을 정의할 때 사용
@@ -31,6 +37,20 @@ flutter doctor
 
 - 사용 시점: StatelessWidget은 주로 화면에 표시할 내용이 고정되어 있고, 사용자 상호작용에 의해 변경되지 않는 경우에 사용합니다.
 
+```dart
+import 'package:flutter/material.dart';
+
+class MyWidget extends StatelessWidget {
+    // key를 부모 클래스에 전달하고 이 위젯이 불변임을 명시하는 구문
+    const MyWidget({ super.key });
+    @override
+    Widget build(BuildContext context) {
+        return const Text('이건 불변의 위젯이야 !');
+    }
+}
+```
+
+
 ### StatefulWidget
 > 동적인 상태를 가지는 위젯을 만들 때 사용
 
@@ -39,39 +59,56 @@ flutter doctor
 ```dart
 import 'dart:math';
 import 'package:flutter/material.dart';
-int mynum = 1;
-class MyNumber extends StatefulWidget {
-    const MyNumber({ super.key });
+int number = 1;
+class MyWidget extends StatefulWidget {
+    final String title; 
+    final String desc; 
+    // 생성자, 여기서 {} 는 Dart 에서 쓰이는 Map 과 상관이 없음.
+    const MyNumber({ 
+        super.key,
+        required this.title
+        required this.desc
+    });
+    /*
+        위 구문은 아래 구문과 동일하다. ':' 뒤에 오는 부분은 초기화 리스트를 정의함
+        Dart 에서의 생성자는 잘 이해가 안가네 .. ㅎㅎ
+
+        const MyNumber({
+            Key? key,
+            requied string title,
+            requied string desc,
+        }) : title = title,
+            desc = desc,
+            super(key: key);
+     */
     @override
-    State<MyNumber> createState() {
-        return _MyNumberState();
+    State<MyWidget> createState() {
+        return _MyWidgetState();
     }
 }
-class _MyNumberState extends State<MyNumber> {
-    void setMyNum() {
+class _MyWidgetState extends State<MyWidget> {
+    void setNumber() {
         setState(() {
-            mynum = Random().nextInt(1000) + 1;
+            number = Random().nextInt(1000) + 1;
         });
     }
     @override
     Widget build(context) {
-        return Column(
-            children: [
-                TextButton(
-                    onPressed: setMyNum, 
-                    style: TextButton.styleFrom(
-                        foregroundColor: Colors.red,
-                        textStyle: const TextStyle(
-                            fontSize: 28,
-                        )
-                    ),
-                    child: Text('$mynum')
-                )
-            ],
-        );
+        // 💡 widget: State 객체가 속한 StatefulWidget 의 인스턴스를 참조할 수 있는 특수한 변수
+        var title = widget.title;
+        print('이 위젯의 이름은 $title 이야');
+        // setNumber();
+
+        return const TextButton(
+            onPressed: setNumber,
+            child: const Text('이건 변할 수 있는 위젯이야 ! $number')
+        )
     }
 }
 ```
+💡 widget 변수는 State 객체가 속한 StatefulWidget 의 인스턴스를 참조할 수 있는 특수한 변수  
+💡 bulid 함수 안에선 setState 관련 함수를 사용하면 안돼 ! 무한루프나 비효율적인 렌더링이 발생
+
 ### BoxDecoration
 > Container 위젯이나 다른 위젯의 배경을 꾸미기 위해 사용하는 클래스, 다양한 시각적 효과를 적용 할 수 있다.
 
@@ -107,6 +144,27 @@ Text(
     )
 ),
 ```
+### MainAxisAlignment
+> 위젯의 주 축 (main axis) 에서 자식들의 정렬 방식.
+> **Row** 에서는 수평방향이고, **Column** 에서는 수직방향이다.
+
+- MainAxisAlignment.start
+- MainAxisAlignment.end
+- MainAxisAlignment.center
+- MainAxisAlignment.spaceBetween
+- MainAxisAlignment.spaceAround
+- MainAxisAlignment.spaceEvenly
+
+💡CSS 로 비유하면 **display: flex** 같은 느낌이네 ...
+
+### MainAxisSize
+> 위젯의 주 축 방향 (main axis) 으로 얼마나 확장할지를 제어
+
+- MainAxisSize.min
+- MainAxisSize.max
+
+💡CSS 로 비유하면 **flex: 0** 은 min 에 해당하고 **flex: 1** 은 max 와 같네
+
 
 ## 커스텀 위젯 만들기
 ```dart
@@ -190,15 +248,16 @@ flutter:
      - assets/
 ```
 
-## State
 
-### initState()
-> State 객체가 생성된 다음 실행
 
-- 위젯의 상태를 초기화하거나 데이터 요청, 애니메이션 등 초기 설정을 수행할 수 있다.
+## 실행오류
+> 오류 항목 어떻게 해결하였는지 기록하기
 
-### build()
-> 위젯이 만들어지고 setState() 가 호출 된 다음에 실행 
+### map 함수 배열주는데 에러 발생
+```
+📌오류문구
+The argument type 'Iterable<Row>' can't be assigned to the parameter type 'List<Widget>
 
-### dispose()
-> 위젯이 제거될 때 실행
+📌해결하기  
+map(...).toList() 를 사용하면됨.**
+```
